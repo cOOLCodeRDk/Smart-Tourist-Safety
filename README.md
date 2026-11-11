@@ -44,3 +44,15 @@ This is a front-end prototype. Location zones are illustrative, incident data is
 B.Tech Computer Science & Engineering – Artificial Intelligence and Machine Learning
 
 **Project:** Smart Tourist Safety Monitoring & Incident Response System
+
+
+---
+
+## 🌐 Live Demo
+
+[🚀 Visit SafeTrail](https://c00lcoderdk.github.io/Smart-Tourist-Safety/)
+
+## 📸 Project Screenshots
+
+
+
