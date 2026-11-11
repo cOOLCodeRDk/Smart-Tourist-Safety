@@ -56,6 +56,7 @@ B.Tech Computer Science & Engineering – Artificial Intelligence and Machine Le
 
 #### Main Dashboard
 https://github.com/cOOLCodeRDk/Smart-Tourist-Safety/blob/main/Screenshot%202026-11-11%20133836.png
+
 ####Emergency Response
 https://github.com/cOOLCodeRDk/Smart-Tourist-Safety/blob/main/Screenshot%202026-11-11%20133952.png
 
