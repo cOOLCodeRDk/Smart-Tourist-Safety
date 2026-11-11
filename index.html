@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAKSHAK — Tourist Safety Grid</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-view="control">
+<div class="app">
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">RAKSHAK<span>.</span></div>
+      <div class="brand-sub">Tourist Safety Grid — Rishikesh Sector</div>
+    </div>
+    <div class="stat-strip">
+      <div class="stat">
+        <div class="stat-num" id="stat-total">—</div>
+        <div class="stat-label"><span class="live-dot"></span>tourists tracked</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num c-danger" id="stat-alerts">—</div>
+        <div class="stat-label">active alerts</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="stat-score">—</div>
+        <div class="stat-label">avg. safety score</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num c-safe" id="stat-coverage">94%</div>
+        <div class="stat-label">geo-fence coverage</div>
+      </div>
+    </div>
+    <div class="view-toggle">
+      <button class="seg-btn active" data-view="control">Control Room</button>
+      <button class="seg-btn" data-view="tourist">Tourist App</button>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- ROSTER -->
+    <div class="pane">
+      <div class="pane-head">
+        <div class="pane-title">Roster</div>
+        <div class="pane-count" id="roster-count">—</div>
+      </div>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search by name or ID…">
+      </div>
+      <div class="roster" id="roster"></div>
+    </div>
+
+    <!-- MAP -->
+    <div class="pane">
+      <div class="pane-head">
+        <div class="pane-title">Live Grid — Rishikesh / Laxman Jhula sector</div>
+        <div class="pane-count">river · forest trail · market lane · rapids zone</div>
+      </div>
+      <div class="map-wrap" id="mapWrapOriginal">
+        <div class="map-frame" id="mapFrame">
+          <svg class="mapsvg" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" id="mapsvg">
+            <rect x="0" y="0" width="800" height="500" fill="#0C1626"/>
+            <polygon points="0,0 260,0 190,180 60,260 0,220" fill="#16352C" stroke="#1F4B3F" stroke-width="1"/>
+            <text x="55" y="60" fill="#4E7C68" font-size="12" font-family="IBM Plex Mono, monospace">FOREST TRAIL</text>
+
+            <path d="M -10,120 C 150,150 190,260 340,270 C 480,280 520,360 800,340" stroke="#3B82C4" stroke-width="26" fill="none" opacity="0.55"/>
+            <path d="M -10,120 C 150,150 190,260 340,270 C 480,280 520,360 800,340" stroke="#5FA3DE" stroke-width="3" fill="none" opacity="0.8"/>
+            <text x="600" y="325" fill="#7FB3E0" font-size="12" font-family="IBM Plex Mono, monospace">GANGA — RIVER FRONT</text>
+
+            <polygon points="330,340 520,330 560,430 300,440" fill="rgba(45,212,191,0.08)" stroke="#2DD4BF" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <text x="350" y="400" fill="#2DD4BF" font-size="12" font-family="IBM Plex Mono, monospace">MARKET LANE — SAFE ZONE</text>
+
+            <polygon id="bufferZone" points="450,220 590,200 650,300 590,370 465,345 435,285" fill="rgba(245,165,36,0.05)" stroke="#F5A524" stroke-width="1.2" stroke-dasharray="5 4" opacity="0.7"/>
+            <polygon id="riskZone" points="480,255 560,240 610,300 560,340 500,320" fill="rgba(239,68,68,0.12)" stroke="#EF4444" stroke-width="1.5"/>
+            <text x="500" y="192" fill="#EF4444" font-size="12" font-family="IBM Plex Mono, monospace">RAPIDS — RESTRICTED ZONE</text>
+
+            <line x1="330" y1="200" x2="380" y2="290" stroke="#8CA0B8" stroke-width="4" stroke-linecap="round"/>
+            <text x="270" y="195" fill="#8CA0B8" font-size="11" font-family="IBM Plex Mono, monospace">LAXMAN JHULA</text>
+
+            <polygon points="620,150 635,120 650,150" fill="#C9A24A"/>
+            <rect x="618" y="150" width="34" height="10" fill="#C9A24A"/>
+            <text x="600" y="115" fill="#C9A24A" font-size="11" font-family="IBM Plex Mono, monospace">TERA MANZIL</text>
+
+            <g id="markers"></g>
+          </svg>
+
+          <div class="legend">
+            <div class="legend-row"><span class="legend-swatch" style="background:#2DD4BF"></span>Safe</div>
+            <div class="legend-row"><span class="legend-swatch" style="background:#F5A524"></span>Caution / early warning</div>
+            <div class="legend-row"><span class="legend-swatch" style="background:#EF4444"></span>Alert — breach / SOS</div>
+            <div class="legend-row"><span class="legend-tri"></span>Patrol unit</div>
+          </div>
+
+          <div class="map-controls">
+            <button class="sos-btn" id="sosBtn">Simulate SOS (selected)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALERTS + DETAIL -->
+    <div class="pane">
+      <div class="pane-head">
+        <div class="pane-title">Alert feed</div>
+        <div class="pane-count" id="alert-count">—</div>
+      </div>
+      <div class="alert-feed" id="alertFeed"></div>
+      <div class="detail" id="detail"></div>
+    </div>
+
+  </div>
+
+  <!-- TOURIST APP VIEW -->
+  <div class="phone-view">
+    <div class="phone">
+      <div class="phone-header">
+        <div class="phone-title">RAKSHAK</div>
+        <div class="phone-status-pill" id="meStatusPill">SAFE</div>
+      </div>
+      <div class="phone-map-slot" id="phoneMapSlot"></div>
+      <div class="warning-banner" id="warningBanner"></div>
+      <div class="nearest-safe" id="nearestSafe"></div>
+      <button class="sos-big" id="meSosBtn">
+        <div class="sos-progress" id="sosProgress"></div>
+        Hold for SOS
+        <span class="sos-sub">Press and hold 1 second to alert control room</span>
+      </button>
+      <div class="secondary-actions">
+        <button class="sec-btn" data-report="theft">Report theft</button>
+        <button class="sec-btn" data-report="accident">Report accident</button>
+        <button class="sec-btn" data-report="unsafe">I feel unsafe</button>
+      </div>
+      <div class="contacts">
+        <div class="contact-row"><span>Tourist Helpline</span><span>1363</span></div>
+        <div class="contact-row"><span>Local Police</span><span>100</span></div>
+        <div class="contact-row"><span>Emergency contact</span><span id="meContactPhone">—</span></div>
+      </div>
+      <div class="share-footer" id="shareFooter">Your location is shared live with the RAKSHAK control room</div>
+    </div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
