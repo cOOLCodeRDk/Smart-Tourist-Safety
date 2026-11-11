@@ -50,7 +50,7 @@ B.Tech Computer Science & Engineering – Artificial Intelligence and Machine Le
 
 ## 🌐 Live Demo
 
-[🚀 Visit SafeTrail](https://c00lcoderdk.github.io/Smart-Tourist-Safety/)
+[🚀 Visit SafeTrail](https://coolcoderdk.github.io/Smart-Tourist-Safety/)
 
 ## 📸 Project Screenshots
 
